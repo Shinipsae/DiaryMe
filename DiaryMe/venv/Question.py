@@ -2,6 +2,7 @@ import tkinter
 import Main
 import pymysql
 from tkinter import *
+from tkinter import messagebox
 from tkinter.ttk import *
 from math import *
 
@@ -76,18 +77,20 @@ class Diary(Frame):
 
     def onClick_save(self, text_answer):
         answer = text_answer.get('1.0', 'end')
-        print(answer)
         cursor3 = conn.cursor()
         sql3 = f"insert into `diaryme`.`member` (`content`) values ('{answer}')"
         cursor3.execute(sql3)
-        conn.commit() # 꼭 필요 !!!!!!!!!!
-        conn.close()
-        # INSERT INTO `diaryme`.`member` (`content`) VALUES ('원동력없이 살고있어요..');
-        # print(text_answer.get('1.0', "end"))
+        conn.commit() # insert에서 꼭 필요 !!!!!!!!!!
+        conn.close() # 짝 맞춰서 닫기
+        tkinter.messagebox.showinfo("Diary Me",
+        "오늘도 '나'와 한걸음 더 가까워지셨네요! ♥")
+        Main.main()
+
 
 def main():
+
     root = Tk()
-    root.geometry("500x500+100+100")
+    root.geometry("500x500+200+200") # 뒷 숫자는 초기화면 위치
     root.resizable(False, False)
     app = Diary(root)
     root.mainloop()
